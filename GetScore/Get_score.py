@@ -5,6 +5,7 @@ from CreateOutput import RunonTest
 from contextlib import closing
 from zipfile import ZipFile, ZIP_DEFLATED
 import os
+import datetime
 
 def zipdir(basedir, archivename):
     assert os.path.isdir(basedir)
@@ -20,4 +21,11 @@ if __name__ == '__main__':
     RunonTest(picklepath)
     zipdir('Predictions', 'Preds.zip')
     auroc, auprc, accuracy, f_measure, utility = evaluate_scores('Real.zip', 'Preds.zip')
-    print(auroc, auprc, accuracy, f_measure, utility)
+    print('AUROC : ', auroc)
+    print('AUPRC : ',  auprc)
+    print('Accuracy : ', accuracy)
+    print('f_measure : ', f_measure)
+    print('utility : ', utility)
+    with open('results.txt', 'a+') as resfile:
+        now = datetime.datetime.now()
+        print(str(now), 'AUROC : ', auroc, 'AUPRC : ', auprc, 'Accuracy : ', accuracy, 'f_measure : ', f_measure, 'utility : ', utility, file=resfile)
