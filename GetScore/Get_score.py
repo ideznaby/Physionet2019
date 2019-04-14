@@ -17,6 +17,8 @@ def zipdir(basedir, archivename):
                 zfn = absfn[len(basedir)+len(os.sep):] #XXX: relative path
                 z.write(absfn, zfn)
 if __name__ == '__main__':
+    if not os.path.exists('Predictions'):
+        os.makedir('Predictions')
     picklepath = 'Physionet19_avg_glob_SetA.pkl'
     RunonTest(picklepath)
     zipdir('Predictions', 'Preds.zip')
